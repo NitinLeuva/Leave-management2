@@ -131,17 +131,38 @@ namespace LeaveManagement3.Controllers
         // GET: LeaveTypes/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            if (!_repo.IsExists(id))
+            {
+                return NotFound();
+            }
+
+            var LeaveType = _repo.FindById(id);
+            var model = _mapper.Map<LeaveTypeVM>(LeaveType);
+            return View(model);
         }
 
         // POST: LeaveTypes/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(LeaveTypeVM model)
         {
             try
             {
-                // TODO: Add delete logic here
+                if (!_repo.IsExists(model.Id))
+                {
+                    return NotFound();
+                }
+
+                var LeaveType = _mapper.Map<LeaveType>(model);
+                LeaveType = _repo.FindById(model.Id);               
+
+                var isSuccess = _repo.Delete(LeaveType);
+
+                if (!isSuccess)
+                {
+                    ModelState.AddModelError("", "something went wrong");
+                    return View(model);
+                }
 
                 return RedirectToAction(nameof(Index));
             }
