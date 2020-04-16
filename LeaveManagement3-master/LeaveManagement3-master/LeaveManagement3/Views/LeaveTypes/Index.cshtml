@@ -1,4 +1,4 @@
-﻿@model IEnumerable<leave_management.Models.DetailsLeaveTypeVM>
+﻿@model IEnumerable<LeaveManagement3.Models.LeaveTypeVM>
 
 @{
     ViewData["Title"] = "Index";
@@ -37,9 +37,9 @@
                 @Html.DisplayFor(modelItem => item.DateCreated)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }); |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>
 }

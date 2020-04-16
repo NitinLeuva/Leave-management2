@@ -29,7 +29,7 @@ namespace LeaveManagement3.Controllers
         public ActionResult Index()
         {
             var leaveTypes = _repo.FindAll().ToList();
-            var model = _mapper.Map<List<LeaveType>, List<DetailsLeaveTypeVM>>(leaveTypes);
+            var model = _mapper.Map<List<LeaveType>, List<LeaveTypeVM>>(leaveTypes);
             return View(model);
         }
 
@@ -37,7 +37,13 @@ namespace LeaveManagement3.Controllers
         // GET: LeaveTypes/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            if (!_repo.IsExists(id))
+            {
+                return NotFound();
+            }
+            var leaveType = _repo.FindById(id);
+            var model = _mapper.Map<LeaveTypeVM>(leaveType);
+            return View(model);
         }
 
         // GET: LeaveTypes/Create
@@ -49,11 +55,26 @@ namespace LeaveManagement3.Controllers
         // POST: LeaveTypes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(LeaveTypeVM model)
         {
             try
             {
                 // TODO: Add insert logic here
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                var LeaveType = _mapper.Map<LeaveType>(model);
+                LeaveType.DateCreated = System.DateTime.Now;
+
+                var isSuccess = _repo.Create(LeaveType);
+
+                if (!isSuccess)
+                {
+                    ModelState.AddModelError("", "something went wrong");
+                    return View(model);
+                }
 
                 return RedirectToAction(nameof(Index));
             }
@@ -66,19 +87,40 @@ namespace LeaveManagement3.Controllers
         // GET: LeaveTypes/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            if (!_repo.IsExists(id))
+            {
+                return NotFound();
+            }
+
+            var LeaveType = _repo.FindById(id);
+            var model = _mapper.Map<LeaveTypeVM>(LeaveType);
+            return View(model);
         }
 
         // POST: LeaveTypes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(LeaveTypeVM model)
         {
             try
+            { 
+             if (!ModelState.IsValid)
             {
-                // TODO: Add update logic here
+                return View(model);
+            }
 
-                return RedirectToAction(nameof(Index));
+            var LeaveType = _mapper.Map<LeaveType>(model);
+            LeaveType.DateCreated = System.DateTime.Now;
+
+            var isSuccess = _repo.Update(LeaveType);
+
+            if (!isSuccess)
+            {
+                ModelState.AddModelError("", "something went wrong");
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(Index));
             }
             catch
             {
