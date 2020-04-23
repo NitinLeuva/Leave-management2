@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace LeaveManagement3.Data
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public int DefaultDays { get; set; }
         public DateTime DateCreated { get; set; }
     }
 }

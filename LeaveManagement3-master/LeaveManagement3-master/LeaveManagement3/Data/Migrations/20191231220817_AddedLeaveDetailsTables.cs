@@ -14,6 +14,7 @@ namespace LeaveManagement3.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: false),
+                    DefaultDays = table.Column<int>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -30,6 +31,7 @@ namespace LeaveManagement3.Data.Migrations
                     NumberOfDays = table.Column<int>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     EmployeeId = table.Column<string>(nullable: true),
+                    Period = table.Column<int>(nullable: true),
                     LeaveTypeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
