@@ -48,6 +48,7 @@ namespace LeaveManagement3.Controllers
             return View(model);
         }
 
+
         // GET: LeaveTypes/Create
         public ActionResult Create()
         {

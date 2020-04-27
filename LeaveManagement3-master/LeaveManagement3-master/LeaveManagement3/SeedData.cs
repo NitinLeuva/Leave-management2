@@ -20,8 +20,8 @@ namespace LeaveManagement3
             {
                 var user = new IdentityUser
                 {
-                    UserName = "admin1",
-                    Email = "admin1@localhost.com"
+                    UserName = "admin4",
+                    Email = "admin4@localhost.com"
                 };
                 var result = userManager.CreateAsync(user, "Admin@123").Result;
 

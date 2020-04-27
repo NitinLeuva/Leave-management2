@@ -8,6 +8,6 @@ namespace LeaveManagement3.Contracts
 {
     public interface ILeaveAllocationRepository : IRepositoryBase<LeaveAllocation>
     {
-        
+        bool CheckLeaveAllocation(int LeaveTypeId, string EmployeeID);
     }
 }
